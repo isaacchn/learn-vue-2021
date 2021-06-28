@@ -1,28 +1,45 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div id="app">{{ msg }}
+    <div>
+      <!--v-model双向绑定-->
+      <input type="text" v-model="info">
+      <button v-on:click="handleClick">添加</button>
+    </div>
+    <ul>
+      <todo-item v-for="it in list" v-bind:key="it">
+        <template v-slot:it_slot="it_prop">
+          <span v-bind:style="{fontSize:'20px',color:it_prop.is_checked?'red':'blue'}">{{ it }}</span>
+        </template>
+      </todo-item>
+    </ul>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import TodoItem from './components/TodoItem.vue'
 
 export default {
   name: 'App',
+  data() {
+    return {
+      msg: 'hello geektime',
+      info: '',
+      list: []
+    }
+  },
+  methods: {
+    handleClick() {
+      console.log(this.info),
+          this.list.push(this.info),
+          this.info = ''
+    }
+  },
   components: {
-    HelloWorld
+    TodoItem
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+
 </style>
