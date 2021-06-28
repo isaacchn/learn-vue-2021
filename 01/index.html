@@ -1,0 +1,47 @@
+<!--04第一个Vue程序-->
+<html>
+<head>
+    <meta charset="UTF-8">
+    <style>
+        .item_class {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div id="app">{{msg}}
+    <div>
+        <!--v-model双向绑定-->
+        <input type="text" v-model="info">
+        <button v-on:click="handleClick">添加</button>
+    </div>
+    <ul>
+        <todo-item v-for="it in list" v-bind:item_prop="it"></todo-item>
+    </ul>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+    Vue.component('todo-item', {
+        props: ['item_prop'],
+        template: '<li class="item_class">{{item_prop}}</li>'
+    })
+    new Vue({
+        el: '#app',
+        data() {
+            return {
+                msg: 'hello geektime',
+                info: '',
+                list: []
+            }
+        },
+        methods: {
+            handleClick() {
+                console.log(this.info),
+                    this.list.push(this.info),
+                    this.info = ''
+            }
+        }
+    })
+</script>
+</body>
+</html>
